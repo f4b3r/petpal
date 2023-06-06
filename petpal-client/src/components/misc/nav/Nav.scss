@@ -1,0 +1,39 @@
+/* nav.css */
+@import '../../../index.scss';
+
+
+.menu {
+    background-color: #f0f0f0; /* Set your desired background color */
+    padding: 10px; /* Adjust the padding as needed */
+  }
+  
+  .menu .item {
+    color: #333; /* Set your desired text color */
+    cursor: pointer;
+    font-size: 16px; /* Set your desired font size */
+    padding: 10px 15px; /* Adjust the padding as needed */
+  }
+  .nav-header {
+    background-color: $blue !important;
+  }
+  @media only screen and (min-width: 768px) {
+    /* CSS for desktop view */
+    .mobile-menu {
+      display: none;
+    }
+  }
+  
+  @media only screen and (max-width: 767px) {
+    /* CSS for mobile view */
+    .desktop-menu {
+      display: none;
+    }
+
+    
+  }
+
+  .test {
+    @include sm-device {
+      display: none;
+    }
+  }
