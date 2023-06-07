@@ -6,6 +6,8 @@ import logoIcon from '../../resources/images/logo-color.svg'
 import i18n from 'i18next';
 import useKeycloakAuth from "../../hooks/useKeycloakAuth";
 import { useTranslation } from "react-i18next";
+import { Link } from "react-router-dom";
+
 
 const Nav = () => {
 
@@ -47,18 +49,23 @@ const Nav = () => {
           <Image src={logoIcon} className="logo-img" />
         </Menu.Item>
         <Menu.Item
-          name={t('nav-menu.home')} className="test"
-          active={activeItem === 'home'}
+          name={t('nav-menu.home')} 
+          className="test"
+          active={activeItem === t('nav-menu.home')}
           onClick={handleItemClick}
+          as={Link}
+          to='/'
         />
         <Menu.Item
+          as={Link}
+          to='/about'
           name={t('nav-menu.messages')}
-          active={activeItem === 'messages'}
+          active={activeItem === t('nav-menu.messages')}
           onClick={handleItemClick}
         />
         <Menu.Item
           name={t('nav-menu.friends')}
-          active={activeItem === 'friends'}
+          active={activeItem === t('nav-menu.friends')}
           onClick={handleItemClick}
         />
 
@@ -66,13 +73,12 @@ const Nav = () => {
           <>
             <Menu.Item
               name={t('nav-menu.login')}
-              active={activeItem === 'login'}
               onClick={handleItemClick}
               position="right"
             />
             <Menu.Item
               name={t('nav-menu.signin')}
-              active={activeItem === 'sign_in'}
+              active={activeItem === t('nav-menu.signin')}
               onClick={handleItemClick}
             />
           </>
@@ -82,7 +88,6 @@ const Nav = () => {
             <Menu.Item position="right">welcome {userName}</Menu.Item>
             <Menu.Item
               name={t('nav-menu.logout')}
-              active={activeItem === 'logout'}
               onClick={handleItemClick}
             />
           </>

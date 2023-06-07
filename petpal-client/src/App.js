@@ -105,9 +105,8 @@ function App() {
         initOptions={initOptions}
         LoadingComponent={loadingComponent}
       >
-        <Nav />
-
         <Router>
+          <Nav />
           <Routes>
             <Route path="/" element={<Landing />} />
             <Route
@@ -118,12 +117,10 @@ function App() {
                 </SecuredRoute>
               }
             />
-           <Route path="/secured" element={<SecuredRoute><Products /></SecuredRoute>} />
+            <Route path="/secured" element={<SecuredRoute><Products /></SecuredRoute>} />
             <Route path="/about" element={<About />} />
           </Routes>
-
         </Router>
-
       </ReactKeycloakProvider>
     </>
   );
