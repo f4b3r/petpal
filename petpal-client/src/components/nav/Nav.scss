@@ -47,10 +47,12 @@
   }
 }
 
+.cursor-default {
+  cursor: default !important ;
+}
+
 .logo-img {
   width: 16rem;
-
-
   height: 2rem;
   object-fit: cover;
 }

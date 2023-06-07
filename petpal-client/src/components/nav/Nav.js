@@ -5,12 +5,13 @@ import './Nav.scss';
 import logoIcon from '../../resources/images/logo-color.svg'
 import i18n from 'i18next';
 import useKeycloakAuth from "../../hooks/useKeycloakAuth";
+import { useTranslation } from "react-i18next";
 
 const Nav = () => {
 
-  const {isAuthenticated, userName }= useKeycloakAuth();
+  const { isAuthenticated, userName } = useKeycloakAuth();
   const [activeItem, setactiveItem] = useState("home");
-
+  const { t } = useTranslation();
   const [selectedLanguage, setSelectedLanguage] = useState('');
 
   const handleItemClick = (e, { name }) => {
@@ -18,7 +19,7 @@ const Nav = () => {
 
     switch (name) {
       case 'login':
-       // keycloak.login();
+        // keycloak.login();
         break;
       case 'logout':
         //keycloak.logout();
@@ -42,23 +43,21 @@ const Nav = () => {
     <Segment attached size='mini' className="nav-header">
       <Menu secondary className="body-container">
 
-        <Menu.Item
-          onClick={handleItemClick}
-        >
+        <Menu.Item className="cursor-default">
           <Image src={logoIcon} className="logo-img" />
         </Menu.Item>
         <Menu.Item
-          name='home' className="test"
+          name={t('nav-menu.home')} className="test"
           active={activeItem === 'home'}
           onClick={handleItemClick}
         />
         <Menu.Item
-          name='messages'
+          name={t('nav-menu.messages')}
           active={activeItem === 'messages'}
           onClick={handleItemClick}
         />
         <Menu.Item
-          name='friends'
+          name={t('nav-menu.friends')}
           active={activeItem === 'friends'}
           onClick={handleItemClick}
         />
@@ -66,13 +65,13 @@ const Nav = () => {
         {!isAuthenticated && (
           <>
             <Menu.Item
-              name='login'
+              name={t('nav-menu.login')}
               active={activeItem === 'login'}
               onClick={handleItemClick}
               position="right"
             />
             <Menu.Item
-              name='sign_in'
+              name={t('nav-menu.signin')}
               active={activeItem === 'sign_in'}
               onClick={handleItemClick}
             />
@@ -82,18 +81,18 @@ const Nav = () => {
           <>
             <Menu.Item position="right">welcome {userName}</Menu.Item>
             <Menu.Item
-              name='logout'
+              name={t('nav-menu.logout')}
               active={activeItem === 'logout'}
               onClick={handleItemClick}
             />
           </>
         )}
         <Menu.Item onClick={handleItemClick}>
-          <Dropdown text={selectedLanguage} onChange={handleLanguageChange}>
+          <Dropdown text={selectedLanguage}>
             <Dropdown.Menu >
-              <Dropdown.Item text='English' value="en" />
-              <Dropdown.Item text='Italiano' value="it" />
-              <Dropdown.Item text='Deutsch' value="de" />
+              <Dropdown.Item text='English' value="en" onClick={handleLanguageChange} />
+              <Dropdown.Item text='Italiano' value="it" onClick={handleLanguageChange} />
+              <Dropdown.Item text='Deutsch' value="de" onClick={handleLanguageChange} />
             </Dropdown.Menu>
           </Dropdown>
         </Menu.Item>

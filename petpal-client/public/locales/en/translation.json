@@ -2,10 +2,10 @@
   "title": "Benvenuto nell'app PETPAL",
   "nav-menu": {
     "home": "Home",
-    "messages": "Messaggi",
-    "friends": "Amici",
+    "messages": "Messages",
+    "friends": "Friends",
     "login": "Login",
-    "signin": "Registrati",
+    "signin": "Sign In",
     "logout": "Logout"
   }
 }
