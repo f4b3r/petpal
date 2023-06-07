@@ -8,8 +8,8 @@ import Products from './components/Products'
 import About from './components/About'
 
 import SecuredRoute from './components/misc/SecuredRoute'
-import Landing from './components/landing/Landing'
-import Nav from './components/misc/nav/Nav'
+import Landing from './pages/landing'
+import Nav from './components/nav'
 
 
 
