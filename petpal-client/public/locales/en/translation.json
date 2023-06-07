@@ -1,5 +1,8 @@
 {
-  "title": "Benvenuto nell'app PETPAL",
+  "landing": {
+    "title":"PetPal - Find Reliable Pet Sitter",
+    "sub-title": "Welcome to PetPal, your go-to platform for finding reliable and trustworthy pet sitters. Whether you're going on vacation, have a busy work schedule, or simply need someone to take care of your furry friend, PetPal is here to help."
+  },
   "nav-menu": {
     "home": "Home",
     "messages": "Messages",

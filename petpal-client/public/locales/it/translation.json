@@ -1,5 +1,9 @@
 {
-  "title": "Benvenuto nell'app PETPAL",
+  "title": "PetPal - Trova Amorevoli Pet Sitters",
+  "landing": {
+    "title":"PetPal - Trova Amorevoli Pet Sitters",
+    "sub-title": "Benvenuto in PetPal, la tua piattaforma di riferimento per trovare pet sitter affidabili e degni di fiducia. Se stai andando in vacanza, hai un programma di lavoro intenso o semplicemente hai bisogno di qualcuno che si prenda cura del tuo amico peloso, PetPal è qui per aiutarti."
+  },
   "nav-menu": {
     "home": "Home",
     "messages": "Messaggi",

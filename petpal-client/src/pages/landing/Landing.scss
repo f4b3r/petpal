@@ -1,20 +1,32 @@
-@import '../../media.scss';
+@import '../../variable.scss';
 
-.picture {
-  
-    @include sm-device {
-      display: none !important;
-    }
-  }
 
-  .landing-container {
-    background-color: #f9f9fb !important;
-  }
+.landing-container {
+  background-color: $bg-color !important;
+  height: 55rem;
+  background-image: url(../../../src/resources/images/landing-header.jpg);
+  background-size: cover;
 
-  .ui.grid>.column:not(.row){
-    padding-bottom: none;
-  }
+}
 
-  .landing-title {
-    padding: 4rem 9rem !important;
-  }
+.ui.grid>.column:not(.row) {
+  padding-bottom: none;
+}
+
+.landing-title {
+  font-weight: bold;
+  font-family: 'Comic Sans MS', 'Gill Sans MT', 'Trebuchet MS', sans-serif !important;
+  font-size: 3rem !important;
+}
+
+.sub-title {
+  font-family: 'Lato', 'Gill Sans MT', 'Trebuchet MS', sans-serif !important;
+}
+
+.color-white {
+  color: $bg-color !important;
+}
+
+.mt-7 {
+  margin-top: 7rem;
+}

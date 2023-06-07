@@ -1,12 +1,9 @@
 import LandingHeader from "./LandingHeader";
 
 const Landing = () => {
-    return (
-      
+    return (      
             <LandingHeader></LandingHeader>
-    
-    
-    );
+            );
 
 }
 export default Landing;
