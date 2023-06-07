@@ -86,7 +86,7 @@ const Nav = () => {
         {isAuthenticated && (
           <>
             <Menu.Item position="right">welcome {userName}</Menu.Item>
-            <Menu.Item
+            <Menu.Item 
               name={t('nav-menu.logout')}
               onClick={handleItemClick}
             />
