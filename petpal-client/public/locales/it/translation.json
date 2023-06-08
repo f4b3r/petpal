@@ -2,7 +2,9 @@
   "title": "PetPal - Trova Amorevoli Pet Sitters",
   "landing": {
     "title":"PetPal - Trova Amorevoli Pet Sitters",
-    "sub-title": "Benvenuto in PetPal, la tua piattaforma di riferimento per trovare pet sitter affidabili e degni di fiducia. Se stai andando in vacanza, hai un programma di lavoro intenso o semplicemente hai bisogno di qualcuno che si prenda cura del tuo amico peloso, PetPal è qui per aiutarti."
+    "sub-title": "Benvenuto in PetPal, la tua piattaforma di riferimento per trovare pet sitter affidabili e degni di fiducia. Se stai andando in vacanza, hai un programma di lavoro intenso o semplicemente hai bisogno di qualcuno che si prenda cura del tuo amico peloso, PetPal è qui per aiutarti.",
+    "about": "Cosa è PetPal",
+    "description": "PetPal è un'applicazione web progettata per mettere in contatto i proprietari di animali domestici con pet sitter esperti nella loro zona. La nostra piattaforma offre un modo comodo e sicuro per cercare, prenotare e comunicare con pet sitter appassionati di prendersi cura degli animali"
   },
   "nav-menu": {
     "home": "Home",

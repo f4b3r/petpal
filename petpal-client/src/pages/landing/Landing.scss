@@ -1,5 +1,5 @@
 @import '../../variable.scss';
-
+@import '../../index.scss';
 
 .landing-container {
   background-color: $bg-color !important;
@@ -29,4 +29,9 @@
 
 .mt-7 {
   margin-top: 7rem;
+}
+
+
+.landing-description {
+  font-size: 20px;
 }

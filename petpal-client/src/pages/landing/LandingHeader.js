@@ -1,5 +1,5 @@
 import { useTranslation } from "react-i18next";
-import { Container, Grid, Header } from "semantic-ui-react";
+import { Container, Grid } from "semantic-ui-react";
 import './Landing.scss';
 
 const LandingHeader = () => {

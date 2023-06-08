@@ -1,7 +1,9 @@
 {
   "landing": {
     "title":"PetPal - Find Reliable Pet Sitter",
-    "sub-title": "Welcome to PetPal, your go-to platform for finding reliable and trustworthy pet sitters. Whether you're going on vacation, have a busy work schedule, or simply need someone to take care of your furry friend, PetPal is here to help."
+    "sub-title": "Welcome to PetPal, your go-to platform for finding reliable and trustworthy pet sitters. Whether you're going on vacation, have a busy work schedule, or simply need someone to take care of your furry friend, PetPal is here to help.",
+    "about": "About PetPal",
+    "description": "PetPal is a web application designed to connect pet owners with experienced pet sitters in their local area. Our platform provides a convenient and secure way to search for, book, and communicate with pet sitters who are passionate about caring for animals."
   },
   "nav-menu": {
     "home": "Home",
