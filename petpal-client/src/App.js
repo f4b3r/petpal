@@ -6,7 +6,7 @@ import { Dimmer, Header, Icon } from 'semantic-ui-react'
 import { config } from './Constants'
 import Products from './components/Products'
 import About from './components/About'
-
+import Signup from './pages/signup/Signup'
 import SecuredRoute from './components/misc/SecuredRoute'
 import Landing from './pages/landing'
 import Nav from './components/nav'
@@ -109,6 +109,7 @@ function App() {
           <Nav />
           <Routes>
             <Route path="/" element={<Landing />} />
+            <Route path="/sign-up" element={<Signup />} />
             <Route
               path="/secured2"
               element={

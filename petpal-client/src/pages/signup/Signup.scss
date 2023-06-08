@@ -1,0 +1,17 @@
+/* signup.scss */
+@import '../../variable.scss';
+
+.signup-container {
+    background-color: $bg-color !important;
+    height: 55rem;
+}
+
+.mt-4 {
+    margin-top: 4rem;
+}
+
+#btn-grid {
+    button {
+        width:80%
+    }
+}

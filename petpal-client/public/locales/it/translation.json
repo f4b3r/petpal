@@ -10,8 +10,14 @@
     "home": "Home",
     "messages": "Messaggi",
     "friends": "Amici",
-    "login": "Login",
-    "signin": "Registrati",
+    "sign-up": "Registrati",
+    "sign-in": "Accedi",
     "logout": "Logout"
+  },
+  "sign-up": {
+    "header": "Iscriviti a Petpal",
+    "facebook": "Accedi con Facebook",
+    "google": "Accedi con Google",
+    "email": "Iscriviti con Email "
   }
 }

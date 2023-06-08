@@ -26,6 +26,10 @@ const Nav = () => {
       case 'logout':
         //keycloak.logout();
         break;
+        case t('nav-menu.signin'):
+
+          //keycloak.logout();
+          break;
       default:
         // Handle other menu item cases if needed
         break;
@@ -72,14 +76,16 @@ const Nav = () => {
         {!isAuthenticated && (
           <>
             <Menu.Item
-              name={t('nav-menu.login')}
+              name={t('nav-menu.sign-in')}
               onClick={handleItemClick}
               position="right"
             />
             <Menu.Item
-              name={t('nav-menu.signin')}
+              name={t('nav-menu.sign-up')}
               active={activeItem === t('nav-menu.signin')}
               onClick={handleItemClick}
+              as={Link}
+              to='/sign-up'
             />
           </>
         )}

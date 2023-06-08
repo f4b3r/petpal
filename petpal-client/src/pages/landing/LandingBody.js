@@ -3,7 +3,8 @@ import { Grid } from "semantic-ui-react";
 
 const LandingBody = () => {
     const { t } = useTranslation();
-    return (<Grid className="body-container" centered>
+    return (
+    <Grid className="body-container" centered>
         <Grid.Row>
             <Grid.Column textAlign="center" width={16}>
                 <h1>{t('landing.about')}</h1>
