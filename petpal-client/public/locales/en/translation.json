@@ -17,6 +17,14 @@
     "header": "Sign Up to Petpal",
     "facebook": "Sign Up with Facebook",
     "google": "Sign Up with Google",
-    "email": "Sign Up with Email "
+    "email": "Sign Up with Email "   
+  },
+  "sign-up-form": {
+    "firstname": "First Name",
+    "lastname": "Last Name",
+    "postcode": "Postecode",
+    "email":"Email",
+    "password": "Password",
+    "sign-up": "Sign Up"
   }
 }
