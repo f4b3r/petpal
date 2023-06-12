@@ -2,10 +2,12 @@ import { useTranslation } from "react-i18next";
 import { Button, Container, Divider, Grid, Icon, Segment } from "semantic-ui-react";
 import './Signup.scss';
 import SignupForm from "../../components/forms/signup";
-import { useState } from "react";
-const Signup = () => {
+
+import SocialSignForm from "../../components/forms/social-sign";
+const Signup = ({formActive, setformActive}) => {
     const { t } = useTranslation();
-    const [formActive, setformActive] = useState();
+   
+
     return (
         <Container fluid className="signup-container">
             <Grid centered>
@@ -20,52 +22,40 @@ const Signup = () => {
                                 </Grid.Row>
                                 {
                                     formActive && (
-                                    <>
-                                        <Grid.Row>
-                                            <Grid.Column>
-                                                <SignupForm></SignupForm>
-                                            </Grid.Column>
-                                        </Grid.Row>
+                                        <>
+                                            <Grid.Row>
+                                                <Grid.Column>
+                                                    <SignupForm></SignupForm>
+                                                </Grid.Column>
+                                            </Grid.Row>
 
-                                    </>)
+                                        </>)
                                 }
                                 {
                                     !formActive && (
-                                    <>
+                                        <>
+                                        <SocialSignForm></SocialSignForm>
 
-                                        <Grid.Row>
-                                            <Grid.Column>
-                                                <Button size="massive" color='facebook'>
-                                                    <Icon name='facebook' /> {t('sign-up.facebook')}
-                                                </Button>
-                                            </Grid.Column>
-                                        </Grid.Row>
-                                        <Grid.Row>
-                                            <Grid.Column>
-                                                <Button size="massive" color='google plus'>
-                                                    <Icon name='google' /> {t('sign-up.google')}
-                                                </Button>
-                                            </Grid.Column>
-                                        </Grid.Row>
-                                        <Grid.Row>
-                                            <Grid.Column>
-                                                <Button size="massive" onClick={() => setformActive(true)} >
-                                                    <Icon name='mail' />{t('sign-up.email')}
-                                                </Button>
-                                            </Grid.Column>
-                                        </Grid.Row>
-                                        <Grid.Row>
-                                            <Grid.Column>
-                                                <Divider />
-                                            </Grid.Column>
-                                        </Grid.Row>
-                                        <Grid.Row>
-                                            <Grid.Column>
-                                                <p>Already signed up? please sign in</p> <h3 as='a'>sign in</h3>
-                                            </Grid.Column>
-                                        </Grid.Row>
+                                            <Grid.Row  textAlign="center">
+                                                <Grid.Column>
+                                                    <Button size="massive" onClick={() => setformActive(true)} >
+                                                        <Icon name='mail' />{t('sign-up.email')}
+                                                    </Button>
+                                                </Grid.Column>
+                                            </Grid.Row>
+                                            <Grid.Row>
 
-                                    </>)
+                                                <Grid.Column>
+                                                    <Divider />
+                                                </Grid.Column>
+                                            </Grid.Row>
+                                            <Grid.Row>
+                                                <Grid.Column>
+                                                    <p>Already signed up? please sign in</p> <h3 as='a'>sign in</h3>
+                                                </Grid.Column>
+                                            </Grid.Row>
+
+                                        </>)
                                 }
                             </Grid>
                         </Segment>

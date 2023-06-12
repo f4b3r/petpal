@@ -9,7 +9,7 @@ import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 
 
-const Nav = () => {
+const Nav = ({setFormActive}) => {
 
   const { isAuthenticated, userName } = useKeycloakAuth();
   const [activeItem, setactiveItem] = useState("home");
@@ -82,8 +82,7 @@ const Nav = () => {
             />
             <Menu.Item
               name={t('nav-menu.sign-up')}
-              active={activeItem === t('nav-menu.signin')}
-              onClick={handleItemClick}
+              onClick={() => {handleItemClick();setFormActive(false);}}
               as={Link}
               to='/sign-up'
             />

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { ReactKeycloakProvider } from '@react-keycloak/web'
 import Keycloak from 'keycloak-js'
 import { BrowserRouter as Router, Route, Routes, BrowserRouter } from 'react-router-dom'
@@ -36,6 +36,8 @@ function App() {
       }
     }
   }
+
+  const [formActive, setformActive] = useState();
 
   const onKeycloakEvent = (event, error) => {
 
@@ -106,10 +108,10 @@ function App() {
         LoadingComponent={loadingComponent}
       >
         <Router>
-          <Nav />
+          <Nav setformActive={setformActive}/>
           <Routes>
             <Route path="/" element={<Landing />} />
-            <Route path="/sign-up" element={<Signup />} />
+            <Route path="/sign-up" element={<Signup formActive={formActive} setformActive={setformActive} />} />
             <Route
               path="/secured2"
               element={
