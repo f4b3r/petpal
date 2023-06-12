@@ -4,19 +4,20 @@ import './Signup.scss';
 import SignupForm from "../../components/forms/signup";
 
 import SocialSignForm from "../../components/forms/social-sign";
-const Signup = ({formActive, setformActive}) => {
+const Signup = ({ formActive, setformActive }) => {
     const { t } = useTranslation();
-   
+
 
     return (
         <Container fluid className="signup-container">
             <Grid centered>
                 <Grid.Row className="mt-4">
                     <Grid.Column width={6} >
+
                         <Segment>
-                            <Grid id="btn-grid" >
+                            <Grid id="btn-grid" textAlign="center" >
                                 <Grid.Row>
-                                    <Grid.Column as='h1' textAlign="center">
+                                    <Grid.Column as='h1'>
                                         {t('sign-up.header')}
                                     </Grid.Column>
                                 </Grid.Row>
@@ -34,9 +35,9 @@ const Signup = ({formActive, setformActive}) => {
                                 {
                                     !formActive && (
                                         <>
-                                        <SocialSignForm></SocialSignForm>
+                                            <SocialSignForm></SocialSignForm>
 
-                                            <Grid.Row  textAlign="center">
+                                            <Grid.Row>
                                                 <Grid.Column>
                                                     <Button size="massive" onClick={() => setformActive(true)} >
                                                         <Icon name='mail' />{t('sign-up.email')}
@@ -59,6 +60,7 @@ const Signup = ({formActive, setformActive}) => {
                                 }
                             </Grid>
                         </Segment>
+
                     </Grid.Column>
                 </Grid.Row>
             </Grid>

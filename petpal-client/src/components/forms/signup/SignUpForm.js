@@ -7,19 +7,19 @@ const SignupForm = () => {
 
   return (
     <Form id="signup-form">
-      <Form.Field>
+      <Form.Field required>
         <label>{t('sign-up-form.firstname')}</label>
         <input placeholder={t('sign-up-form.firstname')} />
       </Form.Field>
-      <Form.Field>
+      <Form.Field required>
         <label>{t('sign-up-form.lastname')}</label>
         <input placeholder={t('sign-up-form.lastname')} />
       </Form.Field>
-      <Form.Field>
+      <Form.Field required>
         <label>{t('sign-up-form.postcode')}</label>
         <input placeholder={t('sign-up-form.postcode')} />
       </Form.Field>
-      <Form.Field>
+      <Form.Field required>
         <label>{t('sign-up-form.email')}</label>
         <input placeholder={t('sign-up-form.email')} />
       </Form.Field>

@@ -82,6 +82,7 @@ const Nav = ({setFormActive}) => {
             />
             <Menu.Item
               name={t('nav-menu.sign-up')}
+              active={activeItem === t('nav-menu.sign-up')}
               onClick={() => {handleItemClick();setFormActive(false);}}
               as={Link}
               to='/sign-up'
