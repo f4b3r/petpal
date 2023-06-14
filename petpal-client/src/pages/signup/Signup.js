@@ -1,5 +1,5 @@
 import { useTranslation } from "react-i18next";
-import { Button, Container, Divider, Grid, Icon, Segment } from "semantic-ui-react";
+import { Button, Container, Divider, Grid, GridColumn, Icon, Segment } from "semantic-ui-react";
 import './Signup.scss';
 import SignupForm from "../../components/forms/signup";
 
@@ -15,8 +15,8 @@ const Signup = ({ formActive, setformActive }) => {
                     <Grid.Column width={6} >
 
                         <Segment>
-                            <Grid id="btn-grid" textAlign="center" >
-                                <Grid.Row>
+                            <Grid id="btn-grid"  textAlign="center" >
+                                <Grid.Row >
                                     <Grid.Column as='h1'>
                                         {t('sign-up.header')}
                                     </Grid.Column>
@@ -35,6 +35,7 @@ const Signup = ({ formActive, setformActive }) => {
                                 {
                                     !formActive && (
                                         <>
+                                        
                                             <SocialSignForm></SocialSignForm>
 
                                             <Grid.Row>
@@ -55,7 +56,7 @@ const Signup = ({ formActive, setformActive }) => {
                                                     <p>Already signed up? please sign in</p> <h3 as='a'>sign in</h3>
                                                 </Grid.Column>
                                             </Grid.Row>
-
+                                     
                                         </>)
                                 }
                             </Grid>
