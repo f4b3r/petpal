@@ -1,34 +1,41 @@
 import { useTranslation } from "react-i18next";
 import { Button, Checkbox, Form, Input } from "semantic-ui-react";
 import './SignupForm.scss';
+import useForm from "../../../hooks/useForm";
 
 const SignupForm = () => {
+  const { form, onChange, formValid } = useForm();
+
   const { t } = useTranslation();
-  const formValidationState = {
 
-    firstNameError: false,
-    lastNameError: false,
-    postcodeError: false,
-    emailError: false,
-    passwordError: false
-
-  }
   return (
     <Form id="signup-form">
-      <Form.Field required>
-        <label>{t('sign-up-form.firstname')}</label>
-        <input placeholder={t('sign-up-form.firstname')} />
-      </Form.Field>
-      <Form.Field required>
-        <label>{t('sign-up-form.lastname')}</label>
-        <input placeholder={t('sign-up-form.lastname')} />
-      </Form.Field>
-      <Form.Field required>
-        <label>{t('sign-up-form.postcode')}</label>
-        <input placeholder={t('sign-up-form.postcode')} />
-      </Form.Field>
+      <Form.Input required      
+        label={t('sign-up-form.firstname')}
+        name="firstname"
+        placeholder={t('sign-up-form.firstname')}
+        value={form.firstname || ""}
+        onChange={onChange}>
+      </Form.Input>
+      <Form.Input required      
+        label={t('sign-up-form.lastname')}
+        name="lastname"
+        placeholder={t('sign-up-form.lastname')}
+        value={form.lastname || ""}
+        onChange={onChange}>
+      </Form.Input>
+      <Form.Input required      
+        label={t('sign-up-form.postcode')}
+        name="postcode"
+        placeholder={t('sign-up-form.postcode')}
+        value={form.postcode || ""}
+        onChange={onChange}>
+      </Form.Input>
       <Form.Input required
+        value={form.email || ""}
+        onChange={onChange}
         id='form-input-control-error-email'
+        name="email"
         control={Input}
         label={t('sign-up-form.email')}
         placeholder={t('sign-up-form.email')}
@@ -44,11 +51,7 @@ const SignupForm = () => {
       <Form.Field>
         <Checkbox label='I agree to the Terms and Conditions' />
       </Form.Field>
-      <Button type='submit' disabled={!this.formValidationState.firstNameError
-        || !this.formValidationState.lastNameError
-        || !this.formValidationState.emailError
-        || !this.formValidationState.postcodeError
-        || !this.formValidationState.passwordError}>Submit</Button>
+      <Button type='submit' disabled={!formValid} >Submit</Button>
     </Form>
   )
 }
