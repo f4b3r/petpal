@@ -108,10 +108,9 @@ function App() {
         LoadingComponent={loadingComponent}
       >
         <Router>
-          <Nav setformActive={setformActive}/>
+          <Nav setformActive={setformActive} />
           <Routes>
             <Route path="/" element={<Landing />} />
-            <Route path="/sign-up" element={<Signup formActive={formActive} setformActive={setformActive} />} />
             <Route
               path="/secured2"
               element={

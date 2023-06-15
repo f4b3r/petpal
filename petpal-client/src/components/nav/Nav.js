@@ -24,12 +24,11 @@ const Nav = ({ setFormActive }) => {
       case t('nav-menu.sign-in'):
         keycloak.login();
         break;
-      case 'logout':
-        //keycloak.logout();
+      case t('nav-menu.logout'):
+        keycloak.logout();
         break;
-      case t('nav-menu.signin'):
-
-        //keycloak.logout();
+      case t('nav-menu.sign-up'):
+        keycloak.login({ action: 'register' });
         break;
       default:
         // Handle other menu item cases if needed
@@ -84,18 +83,14 @@ const Nav = ({ setFormActive }) => {
             <Menu.Item
               name={t('nav-menu.sign-up')}
               active={activeItem === t('nav-menu.sign-up')}
-              onClick={() => {
-                handleItemClick();
-                setFormActive(false);
-              }}
-              as={Link}
-              to='/sign-up'
+              onClick={handleItemClick}
+              
             />
           </>
         )}
         {isAuthenticated && (
           <>
-            <Menu.Item position="right">welcome {userName}</Menu.Item>
+            <Menu.Item position="right">{userName}</Menu.Item>
             <Menu.Item
               name={t('nav-menu.logout')}
               onClick={handleItemClick}
