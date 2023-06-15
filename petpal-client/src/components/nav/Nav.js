@@ -7,29 +7,30 @@ import i18n from 'i18next';
 import useKeycloakAuth from "../../hooks/useKeycloakAuth";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
+import { useKeycloak } from "@react-keycloak/web";
 
 
-const Nav = ({setFormActive}) => {
+const Nav = ({ setFormActive }) => {
 
   const { isAuthenticated, userName } = useKeycloakAuth();
   const [activeItem, setactiveItem] = useState("home");
   const { t } = useTranslation();
   const [selectedLanguage, setSelectedLanguage] = useState('');
-
+  const { keycloak, initialized } = useKeycloak();
   const handleItemClick = (e, { name }) => {
     setactiveItem(name);
 
     switch (name) {
-      case 'login':
-        // keycloak.login();
+      case t('nav-menu.sign-in'):
+        keycloak.login();
         break;
       case 'logout':
         //keycloak.logout();
         break;
-        case t('nav-menu.signin'):
+      case t('nav-menu.signin'):
 
-          //keycloak.logout();
-          break;
+        //keycloak.logout();
+        break;
       default:
         // Handle other menu item cases if needed
         break;
@@ -53,7 +54,7 @@ const Nav = ({setFormActive}) => {
           <Image src={logoIcon} className="logo-img" />
         </Menu.Item>
         <Menu.Item
-          name={t('nav-menu.home')} 
+          name={t('nav-menu.home')}
           className="test"
           active={activeItem === t('nav-menu.home')}
           onClick={handleItemClick}
@@ -83,7 +84,10 @@ const Nav = ({setFormActive}) => {
             <Menu.Item
               name={t('nav-menu.sign-up')}
               active={activeItem === t('nav-menu.sign-up')}
-              onClick={() => {handleItemClick();setFormActive(false);}}
+              onClick={() => {
+                handleItemClick();
+                setFormActive(false);
+              }}
               as={Link}
               to='/sign-up'
             />
@@ -92,7 +96,7 @@ const Nav = ({setFormActive}) => {
         {isAuthenticated && (
           <>
             <Menu.Item position="right">welcome {userName}</Menu.Item>
-            <Menu.Item 
+            <Menu.Item
               name={t('nav-menu.logout')}
               onClick={handleItemClick}
             />
