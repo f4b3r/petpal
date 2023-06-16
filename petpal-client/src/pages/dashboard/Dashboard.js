@@ -2,7 +2,7 @@ import React from 'react'
 import { Button, Container, Header, Icon } from 'semantic-ui-react'
 
 
-const Home = () => {
+const Dashboard = () => {
     const mobile = false;
     return (
         <Container>
@@ -37,4 +37,4 @@ const Home = () => {
 
 }
 
-export default Home
+export default Dashboard;

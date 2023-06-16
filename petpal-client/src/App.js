@@ -1,19 +1,20 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { ReactKeycloakProvider } from '@react-keycloak/web'
 import Keycloak from 'keycloak-js'
-import { BrowserRouter as Router, Route, Routes, BrowserRouter } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Routes, useNavigate } from 'react-router-dom'
 import { Dimmer, Header, Icon } from 'semantic-ui-react'
 import { config } from './Constants'
 import Products from './components/Products'
 import About from './components/About'
-import Signup from './pages/signup/Signup'
 import SecuredRoute from './components/misc/SecuredRoute'
 import Landing from './pages/landing'
 import Nav from './components/nav'
+import Dashboard from './pages/dashboard/Dashboard'
 
 
 
 function App() {
+  const navigate = useNavigate();
 
   const keycloak = new Keycloak({
     url: `${config.url.KEYCLOAK_BASE_URL}`,
@@ -22,20 +23,24 @@ function App() {
   })
   const initOptions = { pkceMethod: 'S256' }
 
-  const handleOnEvent = async (event, error) => {
-    if (event === 'onAuthSuccess') {
-      if (keycloak.authenticated) {
-        /*  let response = await moviesApi.getUserExtrasMe(keycloak.token)
-          if (response.status === 404) {
-            const userExtra = { avatar: keycloak.tokenParsed.preferred_username }
-            response = await moviesApi.saveUserExtrasMe(keycloak.token, userExtra)
-            console.log('UserExtra created for ' + keycloak.tokenParsed.preferred_username)
-          }
-          keycloak['avatar'] = response.data.avatar*/
-        console.log('user authenticated')
-      }
+  const handleOnEvent = (event, error) => {
+    if (event === 'onAuthSuccess' && keycloak.authenticated && !window.location.pathname.includes('/dashboard')) {
+      navigate('/dashboard');
+      console.log('User authenticated');
     }
-  }
+  };
+
+  useEffect(() => {
+    const checkAuthenticated = async () => {
+      await keycloak.init(initOptions);
+      if (keycloak.authenticated && !window.location.pathname.includes('/dashboard')) {
+        navigate('/dashboard');
+        console.log('User authenticated');
+      }
+    };
+  
+    checkAuthenticated();
+  }, [keycloak, navigate]);
 
   const [formActive, setformActive] = useState();
 
@@ -106,8 +111,9 @@ function App() {
         authClient={keycloak}
         initOptions={initOptions}
         LoadingComponent={loadingComponent}
+        //onEvent={handleOnEvent}
       >
-        <Router>
+       
           <Nav setformActive={setformActive} />
           <Routes>
             <Route path="/" element={<Landing />} />
@@ -119,10 +125,10 @@ function App() {
                 </SecuredRoute>
               }
             />
-            <Route path="/secured" element={<SecuredRoute><Products /></SecuredRoute>} />
+            <Route path="/dashboard" element={<SecuredRoute><Dashboard /></SecuredRoute>} />
             <Route path="/about" element={<About />} />
           </Routes>
-        </Router>
+      
       </ReactKeycloakProvider>
     </>
   );
