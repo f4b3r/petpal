@@ -10,7 +10,8 @@ import { Link } from "react-router-dom";
 import { useKeycloak } from "@react-keycloak/web";
 
 
-const Nav = ({ setFormActive }) => {
+
+const Nav = () => {
 
   const { isAuthenticated, userName } = useKeycloakAuth();
   const [activeItem, setactiveItem] = useState("home");

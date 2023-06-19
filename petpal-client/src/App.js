@@ -15,36 +15,15 @@ import Dashboard from './pages/dashboard/Dashboard'
 
 function App() {
   const navigate = useNavigate();
-
   
   const initOptions = { pkceMethod: 'S256' }
 
   const handleOnEvent = (event, error) => {
-    if (event === 'onAuthSuccess' && keycloak.authenticated && !window.location.pathname.includes('/dashboard')) {
+    if (event === 'onAuthSuccess' ) {
       navigate('/dashboard');
       console.log('User authenticated');
     }
   };
-
-  useEffect(() => {
-    const checkAuthenticated = async () => {
-      await keycloak.init(initOptions);
-      if (keycloak.authenticated && !window.location.pathname.includes('/dashboard')) {
-        navigate('/dashboard');
-        console.log('User authenticated');
-      }
-    };
-  
-    checkAuthenticated();
-  }, [keycloak, navigate]);
-
-  const [formActive, setformActive] = useState();
-
-  const onKeycloakEvent = (event, error) => {
-
-    console.log('onKeycloakEvent', event, error)
-    debugger;
-  }
 
   const onKeycloakTokens = (tokens) => {
     console.log('onKeycloakTokens', tokens)
@@ -61,45 +40,6 @@ function App() {
       </Header>
     </Dimmer>
   )
-  /*
-    return (
-      <ReactKeycloakProvider
-        authClient={keycloak}
-        initOptions={initOptions}
-        LoadingComponent={loadingComponent}
-        onEvent={(event, error) => handleOnEvent(event, error)}
-      >
-        <Router>
-          <Navbar />
-          <Switch>
-            <Route path='/' exact component={Home} />
-            <Route path='/home' component={Home} />
-            <Route path='/movies/:id' component={MovieDetail} />
-            <PrivateRoute path='/movies' component={MoviesPage} />
-            <PrivateRoute path='/wizard' component={MovieWizard} />
-            <PrivateRoute path='/settings' component={UserSettings} />
-            <Route component={Home} />
-          </Switch>
-        </Router>
-      </ReactKeycloakProvider>
-    )
-  
-    return (
-      <ReactKeycloakProvider
-        authClient={keycloak}
-        initOptions={initOptions}
-        LoadingComponent={loadingComponent}
-        onEvent={(event, error) => handleOnEvent(event, error)}
-      >
-        <Router>
-          <Routes>
-            <Route path='/' exact component={Home} />
-            <Route path='/home' component={Home} />
-            <Route component={Home} />
-          </Routes>
-        </Router>
-      </ReactKeycloakProvider>
-    )*/
 
   return (
     <>
@@ -108,9 +48,10 @@ function App() {
         initOptions={initOptions}
         LoadingComponent={loadingComponent}
         onEvent={handleOnEvent}
+        onTokens={onKeycloakTokens}
       >
        
-          <Nav setformActive={setformActive} />
+          <Nav/>
           <Routes>
             <Route path="/" element={<Landing />} />
             <Route
