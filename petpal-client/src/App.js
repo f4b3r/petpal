@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import { ReactKeycloakProvider } from '@react-keycloak/web'
-import Keycloak from 'keycloak-js'
+import keycloak from './Keycloak'
 import { BrowserRouter as Router, Route, Routes, useNavigate } from 'react-router-dom'
 import { Dimmer, Header, Icon } from 'semantic-ui-react'
-import { config } from './Constants'
+
 import Products from './components/Products'
 import About from './components/About'
 import SecuredRoute from './components/misc/SecuredRoute'
@@ -16,11 +16,7 @@ import Dashboard from './pages/dashboard/Dashboard'
 function App() {
   const navigate = useNavigate();
 
-  const keycloak = new Keycloak({
-    url: `${config.url.KEYCLOAK_BASE_URL}`,
-    realm: "petpal",
-    clientId: "petpal-client"
-  })
+  
   const initOptions = { pkceMethod: 'S256' }
 
   const handleOnEvent = (event, error) => {
@@ -111,7 +107,7 @@ function App() {
         authClient={keycloak}
         initOptions={initOptions}
         LoadingComponent={loadingComponent}
-        //onEvent={handleOnEvent}
+        onEvent={handleOnEvent}
       >
        
           <Nav setformActive={setformActive} />
