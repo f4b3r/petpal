@@ -6,23 +6,9 @@ import reportWebVitals from './reportWebVitals';
 import 'semantic-ui-css/semantic.min.css'
 import './i18n';
 import { BrowserRouter } from 'react-router-dom';
-import axios from "axios";
-import useKeycloakAuth from './hooks/useKeycloakAuth';
 
-// HTTP
 
-const _axios = axios.create();
 
-_axios.interceptors.request.use((config) => {
-    const { isAuthenticated, token, updateToken } = useKeycloakAuth();
-  if (isAuthenticated) {
-    const cb = () => {
-      config.headers.Authorization = `Bearer ${token}`;
-      return Promise.resolve(config);
-    };
-    return updateToken(cb);
-  }
-});
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

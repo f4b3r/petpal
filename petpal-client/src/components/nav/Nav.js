@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-
+import { userApi } from "../../services/UserService";
 import { Dropdown, Image, Menu, Segment } from "semantic-ui-react";
 import './Nav.scss';
 import logoIcon from '../../resources/images/logo-color.svg'
@@ -18,7 +18,10 @@ const Nav = () => {
   const { t } = useTranslation();
   const [selectedLanguage, setSelectedLanguage] = useState('');
   const { keycloak, initialized } = useKeycloak();
-  const handleItemClick = (e, { name }) => {
+
+
+
+  const handleItemClick =  (e, { name }) => {
     setactiveItem(name);
 
     switch (name) {
@@ -31,6 +34,7 @@ const Nav = () => {
       case t('nav-menu.sign-up'):
         keycloak.login({ action: 'register' });
         break;
+     
       default:
         // Handle other menu item cases if needed
         break;
@@ -41,6 +45,11 @@ const Nav = () => {
     i18n.changeLanguage(value);
     setSelectedLanguage(value);
   }
+
+  const asyncgetUsers = () => {
+   
+    userApi.getPosts().then((movies) => console.log(movies)).catch(err => console.log(err))
+  };
 
   useEffect(() => {
     setSelectedLanguage(i18n.language);
@@ -66,7 +75,7 @@ const Nav = () => {
           to='/about'
           name={t('nav-menu.messages')}
           active={activeItem === t('nav-menu.messages')}
-          onClick={handleItemClick}
+          onClick={asyncgetUsers}
         />
         <Menu.Item
           name={t('nav-menu.friends')}
