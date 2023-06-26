@@ -1,10 +1,6 @@
 version: '3'
 
 volumes:
-  postgres_data:
-    driver: local
-  keycloak_data: # Add a new volume for Keycloak
-    driver: local
   mysql-data:
     driver: local
     
@@ -13,40 +9,7 @@ networks:
   frontend:    
   
 services:
-    #        POSTGRES SERVICE
-  postgres:
-    image: postgres
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
-    environment:
-      POSTGRES_DB: keycloak
-      POSTGRES_USER: keycloak
-      POSTGRES_PASSWORD: password
 
-
-   #        KEYCLOAK SERVICE
-  keycloak:
-    image: quay.io/keycloak/keycloak:21.0.1
-    volumes:
-      - keycloak_data:/opt/jboss/keycloak
-    environment:
-      DB_VENDOR: POSTGRES
-      DB_ADDR: postgres
-      DB_DATABASE: keycloak
-      DB_USER: keycloak
-      DB_SCHEMA: public
-      DB_PASSWORD: password
-      KEYCLOAK_USER: admin
-      KEYCLOAK_PASSWORD: Pa55w0rd
-      KEYCLOAK_ADMIN: admin
-      KEYCLOAK_ADMIN_PASSWORD: admin
-    command: ['start-dev --http-relative-path=/auth']
-    ports:
-      - 8080:8080
-    depends_on:
-      - postgres
-      
-      
     # PETPAL CORE SERVICE
   petpal-core:
     image: petpal-core:1.0.0
@@ -78,9 +41,6 @@ services:
         options:
             max-size: "20m"
             max-file: "10"
-            
-            
-            
     
     # Database Service (Mysql)
   mysql_core:
