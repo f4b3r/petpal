@@ -5,11 +5,13 @@ import com.petfriends.core.petpal.controller.auth.AuthenticationRequest;
 import com.petfriends.core.petpal.controller.auth.AuthenticationResponse;
 import com.petfriends.core.petpal.controller.auth.RegisterRequest;
 import com.petfriends.core.petpal.entities.User;
+import com.petfriends.core.petpal.exceptions.EmailRegisteredException;
 import com.petfriends.core.petpal.repositories.UserRepository;
 import com.petfriends.core.petpal.utils.Role;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -29,8 +31,8 @@ public class AuthenticationService {
                         request.getPassword()
                 )
         );
-        //TODO handle exception
-        var user = repository.findByEmail(request.getEmail()).orElseThrow();
+
+        var user = repository.findByEmail(request.getEmail()).orElseThrow(() -> new UsernameNotFoundException("User not found"));
         var jwtToken = jwtService.generateToken(user);
         return AuthenticationResponse.builder()
                 .token(jwtToken)
@@ -38,6 +40,12 @@ public class AuthenticationService {
     }
 
     public AuthenticationResponse register(RegisterRequest request) {
+        var userExist = repository.findByEmail(request.getEmail()).isPresent();
+
+        if(userExist){
+            throw new EmailRegisteredException(request.getEmail());
+        }
+
         var user = User.builder()
                 .firstName(request.getFirstname())
                 .lastName(request.getLastname())
