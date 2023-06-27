@@ -4,31 +4,24 @@ import './SignupForm.scss';
 import useForm from "../../../hooks/useForm";
 
 const SignupForm = () => {
-  const { form, onChange, formValid } = useForm();
+  const { form, onChange, formValid, handleSubmit } = useForm();
 
   const { t } = useTranslation();
 
   return (
-    <Form id="signup-form">
-      <Form.Input required      
+    <Form onSubmit={handleSubmit} id="signup-form">
+      <Form.Input required
         label={t('sign-up-form.firstname')}
         name="firstname"
         placeholder={t('sign-up-form.firstname')}
         value={form.firstname || ""}
         onChange={onChange}>
       </Form.Input>
-      <Form.Input required      
+      <Form.Input required
         label={t('sign-up-form.lastname')}
         name="lastname"
         placeholder={t('sign-up-form.lastname')}
         value={form.lastname || ""}
-        onChange={onChange}>
-      </Form.Input>
-      <Form.Input required      
-        label={t('sign-up-form.postcode')}
-        name="postcode"
-        placeholder={t('sign-up-form.postcode')}
-        value={form.postcode || ""}
         onChange={onChange}>
       </Form.Input>
       <Form.Input required
@@ -39,14 +32,15 @@ const SignupForm = () => {
         control={Input}
         label={t('sign-up-form.email')}
         placeholder={t('sign-up-form.email')}
-        error={{
-          content: 'Please enter a valid email address',
-          pointing: 'below',
-        }}>
+       >
 
       </Form.Input>
-      <Form.Input required label={t('sign-up-form.password')} type="password" control={Input} placeholder={t('sign-up-form.password')}>
-
+      <Form.Input
+        label={t('sign-up-form.password')}
+        name="password"
+        placeholder={t('sign-up-form.password')}
+        value={form.password || ""}
+        onChange={onChange}>
       </Form.Input>
       <Form.Field>
         <Checkbox label='I agree to the Terms and Conditions' />

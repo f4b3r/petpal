@@ -4,18 +4,20 @@ import './Signup.scss';
 import SignupForm from "../../components/forms/signup";
 
 import SocialSignForm from "../../components/forms/social-sign";
-const Signup = ({ formActive, setformActive }) => {
-    const { t } = useTranslation();
+import { useState } from "react";
 
+
+const Signup = () => {
+    const { t } = useTranslation();
+    const [formActive, setFormActive] = useState(false);
 
     return (
         <Container fluid className="signup-container">
             <Grid centered>
                 <Grid.Row className="mt-4">
                     <Grid.Column width={6} >
-
                         <Segment>
-                            <Grid id="btn-grid"  textAlign="center" >
+                            <Grid id="btn-grid" textAlign="center" >
                                 <Grid.Row >
                                     <Grid.Column as='h1'>
                                         {t('sign-up.header')}
@@ -29,24 +31,35 @@ const Signup = ({ formActive, setformActive }) => {
                                                     <SignupForm></SignupForm>
                                                 </Grid.Column>
                                             </Grid.Row>
+                                            <Grid.Row>
+                                                <Grid.Column>
+                                                    <p>or</p>
+                                                   <Divider />
+                                                </Grid.Column>
+                                            </Grid.Row>
+                                            <Grid.Row>
+                                                <Grid.Column>
+                                                    <Button size="medium" onClick={() => setFormActive(false)} >
+                                                        <Icon name='social' />{t('sign-up.email')}
+                                                    </Button>
+                                                </Grid.Column>
+                                            </Grid.Row>
 
                                         </>)
                                 }
                                 {
                                     !formActive && (
                                         <>
-                                        
-                                            <SocialSignForm></SocialSignForm>
 
+                                            <SocialSignForm></SocialSignForm>
                                             <Grid.Row>
                                                 <Grid.Column>
-                                                    <Button size="massive" onClick={() => setformActive(true)} >
+                                                    <Button size="massive" onClick={() => setFormActive(true)} >
                                                         <Icon name='mail' />{t('sign-up.email')}
                                                     </Button>
                                                 </Grid.Column>
                                             </Grid.Row>
                                             <Grid.Row>
-
                                                 <Grid.Column>
                                                     <Divider />
                                                 </Grid.Column>
@@ -56,7 +69,7 @@ const Signup = ({ formActive, setformActive }) => {
                                                     <p>Already signed up? please sign in</p> <h3 as='a'>sign in</h3>
                                                 </Grid.Column>
                                             </Grid.Row>
-                                     
+
                                         </>)
                                 }
                             </Grid>

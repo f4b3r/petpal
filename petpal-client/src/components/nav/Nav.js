@@ -1,23 +1,22 @@
 import React, { useEffect, useState } from "react";
-import { userApi } from "../../services/UserService";
 import { Dropdown, Image, Menu, Segment } from "semantic-ui-react";
 import './Nav.scss';
 import logoIcon from '../../resources/images/logo-color.svg'
 import i18n from 'i18next';
-import useKeycloakAuth from "../../hooks/useKeycloakAuth";
 import { useTranslation } from "react-i18next";
-import { Link } from "react-router-dom";
-import { useKeycloak } from "@react-keycloak/web";
+import { Link, useNavigate } from "react-router-dom";
+
 
 
 
 const Nav = () => {
-
-  const { isAuthenticated, userName } = useKeycloakAuth();
+  const navigate = useNavigate();
+  const  isAuthenticated =false;
+  const userName ="faaf"
   const [activeItem, setactiveItem] = useState("home");
   const { t } = useTranslation();
   const [selectedLanguage, setSelectedLanguage] = useState('');
-  const { keycloak, initialized } = useKeycloak();
+
 
 
 
@@ -26,13 +25,13 @@ const Nav = () => {
 
     switch (name) {
       case t('nav-menu.sign-in'):
-        keycloak.login();
+        navigate('/signup');
         break;
       case t('nav-menu.logout'):
-        keycloak.logout();
+     
         break;
       case t('nav-menu.sign-up'):
-        keycloak.login({ action: 'register' });
+        navigate('/signup');
         break;
      
       default:
@@ -45,15 +44,6 @@ const Nav = () => {
     i18n.changeLanguage(value);
     setSelectedLanguage(value);
   }
-
-  const asyncgetUsers = () => {
-   
-    userApi.getPosts().then((movies) => console.log(movies)).catch(err => console.log(err))
-  };
-
-  useEffect(() => {
-    setSelectedLanguage(i18n.language);
-  }, []);
 
   return (
     <Segment attached size='mini' className="nav-header">
@@ -75,7 +65,7 @@ const Nav = () => {
           to='/about'
           name={t('nav-menu.messages')}
           active={activeItem === t('nav-menu.messages')}
-          onClick={asyncgetUsers}
+          onClick={handleItemClick}
         />
         <Menu.Item
           name={t('nav-menu.friends')}
