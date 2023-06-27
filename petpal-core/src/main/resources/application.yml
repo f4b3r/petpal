@@ -25,5 +25,5 @@ logging:
 app:
   jwt:
     secret: 8sHhXfyDiMb32SX0D+JYEdXihJUwQZkGHhFzRTGbwtxsw0tb5fWVN3uuhR4zslj7
-
-
+  cors:
+    allowed-origins: http://localhost:3000
