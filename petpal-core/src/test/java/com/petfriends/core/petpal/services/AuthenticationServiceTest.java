@@ -1,6 +1,7 @@
 package com.petfriends.core.petpal.services;
 
 import com.petfriends.core.petpal.config.JwtService;
+import com.petfriends.core.petpal.controller.auth.AuthenticationResponse;
 import com.petfriends.core.petpal.controller.auth.RegisterRequest;
 import com.petfriends.core.petpal.entities.User;
 import com.petfriends.core.petpal.exceptions.EmailRegisteredException;
@@ -30,8 +31,10 @@ public class AuthenticationServiceTest {
     @Mock
     private UserRepository repository;
     @Mock
-    private JwtService jwtService;
+    private PasswordEncoder passwordEncoder;
 
+    @Mock
+    private JwtService jwtService;
     @InjectMocks
     private AuthenticationService authenticationService;
 
@@ -56,5 +59,34 @@ public class AuthenticationServiceTest {
         verify(jwtService, never()).generateToken(any());
 
     }
+
+    @Test
+    public void testRegister_SuccessfulRegistration() {
+        // Prepare test data
+        RegisterRequest request = new RegisterRequest();
+        request.setFirstname("John");
+        request.setLastname("Doe");
+        request.setEmail("john.doe@example.com");
+        request.setPassword("password123");
+
+        // Set up mock behavior
+        when(repository.findByEmail(request.getEmail())).thenReturn(Optional.empty());
+        when(passwordEncoder.encode(request.getPassword())).thenReturn("encodedPassword");
+        when(jwtService.generateToken(any())).thenReturn("jwtToken");
+
+        // Perform the test
+        AuthenticationResponse response = authenticationService.register(request);
+
+        // Verify method invocations and assertions
+        verify(repository).findByEmail(request.getEmail());
+        verify(repository).save(any());
+        verify(jwtService).generateToken(any());
+
+        // Verify the returned response
+        assertNotNull(response);
+        assertEquals("jwtToken", response.getToken());
+    }
+
+
 
 }
