@@ -1,10 +1,10 @@
 import { useTranslation } from "react-i18next";
 import { Button, Checkbox, Form, Input } from "semantic-ui-react";
 import './SignupForm.scss';
-import useForm from "../../../hooks/useForm";
 
-const SignupForm = () => {
-  const { form, onChange, formValid, handleSubmit } = useForm();
+
+const SignupForm = ({ form, onChange, formValid, handleSubmit }) => {
+ 
 
   const { t } = useTranslation();
 

@@ -1,15 +1,19 @@
 import { useTranslation } from "react-i18next";
-import { Button, Container, Divider, Grid, GridColumn, Icon, Segment } from "semantic-ui-react";
+import { Button, Container, Divider, Grid, GridColumn, Icon, Message, Segment } from "semantic-ui-react";
 import './Signup.scss';
 import SignupForm from "../../components/forms/signup";
 
 import SocialSignForm from "../../components/forms/social-sign";
 import { useState } from "react";
+import useForm from "../../hooks/useForm";
 
 
 const Signup = () => {
     const { t } = useTranslation();
     const [formActive, setFormActive] = useState(false);
+    const { form, onChange, formValid, handleSubmit, responseMessage, isSuccess } = useForm();
+
+
 
     return (
         <Container fluid className="signup-container">
@@ -23,18 +27,28 @@ const Signup = () => {
                                         {t('sign-up.header')}
                                     </Grid.Column>
                                 </Grid.Row>
+                                <Message
+                                    success={isSuccess} error={!isSuccess}
+                                    header='Error'
+                                    content={responseMessage}
+                                />
                                 {
                                     formActive && (
                                         <>
                                             <Grid.Row>
                                                 <Grid.Column>
-                                                    <SignupForm></SignupForm>
+                                                    <SignupForm
+                                                        form={form}
+                                                        onChange={onChange}
+                                                        formValid={formValid}
+                                                        handleSubmit={handleSubmit}
+                                                    />
                                                 </Grid.Column>
                                             </Grid.Row>
                                             <Grid.Row>
                                                 <Grid.Column>
                                                     <p>or</p>
-                                                   <Divider />
+                                                    <Divider />
                                                 </Grid.Column>
                                             </Grid.Row>
                                             <Grid.Row>
