@@ -12,7 +12,7 @@ const useForm = () => {
        
   if (formValid) {
     api
-      .post('/register', form)
+      .post('/auth/register', form)
       .then((response) => {
         // Handle the response data
         console.log('API response:', response.data);
