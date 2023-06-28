@@ -26,6 +26,9 @@
     "postcode": "Codice Postale",
     "email":"Email",
     "password": "Password",
-    "sign-up": "Iscriviti"
+    "sign-up": "Iscriviti",
+    "required-field": "Campo obbligatorio",
+    "email-format-error": "Inserisci una email valida",
+    "password-format-error": "Inserisci almeno 8 caratteri"
   }
 }

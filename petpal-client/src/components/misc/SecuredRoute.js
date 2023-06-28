@@ -1,12 +1,11 @@
 import React, { useEffect } from 'react'
-import { useKeycloak } from '@react-keycloak/web'
 import { useNavigate } from 'react-router-dom';
 
 
 function SecuredRoute({ children }) {
-  const { keycloak } = useKeycloak();
+ // const { keycloak } = useKeycloak();
   const navigate = useNavigate();
-  const isLoggedIn = keycloak.authenticated;
+  const isLoggedIn =false;
 
   useEffect(() => {
     if (!isLoggedIn) {

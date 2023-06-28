@@ -26,14 +26,49 @@ const useForm = () => {
           setResponseMessage(error.response.data.message);
           console.error('API error:', error);
         });
+    } else {
+      validateForm();
     }
   }
+
+  function validateForm() {
+    const updatedForm = {
+      ...form,
+      firstnameError: !form.firstname || form.firstname.length === 0,
+      lastnameError: !form.lastname || form.lastname.length === 0,
+      emailRequiredError: !form.email || form.email.length === 0,
+      passwordRequiredError: !form.password || form.password.length === 0,
+      emailFormatError: validateEmail(form.email),
+      passwordFormatError: form.password?.length < 8
+    };
+
+    setForm(updatedForm);
+  }
+
+  function validateEmail(mail) {
+    return /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(mail) ? false : true; 
+  }
+
+  function validatePassword(pw) {
+
+    return /[A-Z]/       .test(pw) &&
+           /[a-z]/       .test(pw) &&
+           /[0-9]/       .test(pw) &&
+           /[^A-Za-z0-9]/.test(pw) &&
+           pw.length > 8;
+
+}
+
+
 
   const formValid =
     form.firstname?.length > 0
     && form.lastname?.length > 0
     && form.email?.length > 0
     && form.password?.length > 0
-  return { form, onChange, formValid, handleSubmit,responseMessage, isSuccess  };
+
+
+
+  return { form, onChange, formValid, handleSubmit, responseMessage, isSuccess };
 }
 export default useForm;
