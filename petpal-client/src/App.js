@@ -30,8 +30,7 @@ function App() {
         />
         <Route path="/dashboard" element={<SecuredRoute><Dashboard /></SecuredRoute>} />
         <Route path="/about" element={<About />} />
-        <Route path="/signup" element={<Signup />} />
-        <Route path="/signin" element={<Signup />} />
+        <Route path="/auth" element={<Signup />} />
       </Routes>
 
     </>

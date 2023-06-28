@@ -25,13 +25,13 @@ const Nav = () => {
 
     switch (name) {
       case t('nav-menu.sign-in'):
-        navigate('/signup');
+        navigate('/auth?action=signin');
         break;
       case t('nav-menu.logout'):
      
         break;
       case t('nav-menu.sign-up'):
-        navigate('/signup');
+        navigate('/auth?action=signup');
         break;
      
       default:
