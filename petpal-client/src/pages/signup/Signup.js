@@ -27,11 +27,11 @@ const Signup = () => {
                                         {t('sign-up.header')}
                                     </Grid.Column>
                                 </Grid.Row>
-                                <Message
+                                {!isSuccess && <Message
                                     success={isSuccess} error={!isSuccess}
                                     header='Error'
                                     content={responseMessage}
-                                />
+                                />}
                                 {
                                     formActive && (
                                         <>

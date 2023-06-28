@@ -4,14 +4,14 @@ import api from '../api';
 const useForm = () => {
   const [form, setForm] = useState({})
   const [responseMessage, setResponseMessage] = useState(null);
-  const [isSuccess, setIsSuccess] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(true);
 
   const onChange = (e, { name, value }) => {
     setForm({ ...form, [name]: value })
   }
 
   const handleSubmit = (e) => {
-
+    setIsSuccess(true);
     if (formValid) {
       api
         .post('/auth/register', form)
@@ -25,7 +25,9 @@ const useForm = () => {
           setIsSuccess(false);
           setResponseMessage(error.response.data.message);
           console.error('API error:', error);
-        });
+        }).finally(() => {
+          validateForm(); // Reset the form fields
+        });;
     } else {
       validateForm();
     }
