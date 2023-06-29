@@ -1,5 +1,5 @@
 import { useTranslation } from "react-i18next";
-import { Button, Container, Divider, Grid, GridColumn, Icon, Message, Segment } from "semantic-ui-react";
+import { Button, Container, Divider, Grid,  Icon, Message, Segment } from "semantic-ui-react";
 import './Auth.scss';
 import { useLocation } from "react-router-dom";
 import SocialSignForm from "../../components/forms/social-sign";
@@ -12,7 +12,7 @@ const Auth = () => {
     const { t } = useTranslation();
     const [formActive, setFormActive] = useState(false);
     const [actionPage, setActionPage] = useState("");
-    const { form, onChange, handleSubmit, responseMessage, isSuccess, resetForm } = useForm();
+    const { form, onChange, handleSubmit, responseMessage, showAuthError, resetForm } = useForm();
     const location = useLocation();
 
     const handleSignupSubmit = () => {
@@ -44,8 +44,8 @@ const Auth = () => {
                                         {t('sign-up.header')}
                                     </Grid.Column>
                                 </Grid.Row>
-                                {!isSuccess && <Message
-                                    success={isSuccess} error={!isSuccess}
+                                {showAuthError && <Message
+                                    success={!showAuthError} error={showAuthError}
                                     header='Error'
                                     content={responseMessage}
                                 />}

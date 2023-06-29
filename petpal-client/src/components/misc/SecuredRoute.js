@@ -1,17 +1,18 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useContext } from 'react'
 import { useNavigate } from 'react-router-dom';
-
+import { AuthContext } from '../../context/AuthProvider';
 
 function SecuredRoute({ children }) {
- // const { keycloak } = useKeycloak();
+ 
   const navigate = useNavigate();
-  const isLoggedIn =false;
+  const {auth} = useContext(AuthContext);
+ 
 
   useEffect(() => {
-    if (!isLoggedIn) {
+    if (!auth) {
       navigate('/');
     }
-  }, [isLoggedIn, navigate, children]);
+  }, [auth, navigate, children]);
   return <>{children}</>;
 }
 

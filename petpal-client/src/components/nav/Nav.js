@@ -1,24 +1,37 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { Dropdown, Image, Menu, Segment } from "semantic-ui-react";
 import './Nav.scss';
 import logoIcon from '../../resources/images/logo-color.svg'
 import i18n from 'i18next';
 import { useTranslation } from "react-i18next";
 import { Link, useNavigate } from "react-router-dom";
-
+import AuthContext from "../../context/AuthProvider";
 
 
 
 const Nav = () => {
   const navigate = useNavigate();
-  const  isAuthenticated =false;
-  const userName ="faaf"
+  const [userLogged, setUserLogged ] = useState({});
   const [activeItem, setactiveItem] = useState("home");
   const { t } = useTranslation();
-  const [selectedLanguage, setSelectedLanguage] = useState('');
+  const [selectedLanguage, setSelectedLanguage] = useState('it');
+  const { auth,  setAuth } = useContext(AuthContext);
 
+  const handleLogout = () => {
+    
+    setAuth(null); // Clear the authentication state
+    navigate('/'); // Redirect to the home page or any other desired route
+  };
 
-
+  useEffect(() => {   
+    if (auth) {
+      console.log('user logged in', JSON.stringify(auth));
+     setUserLogged(auth.user)
+    }else{
+      console.log('user logged out')
+      setUserLogged(null)
+    }
+  }, [auth]);
 
   const handleItemClick =  (e, { name }) => {
     setactiveItem(name);
@@ -28,7 +41,7 @@ const Nav = () => {
         navigate('/auth?action=signin');
         break;
       case t('nav-menu.logout'):
-     
+        handleLogout()
         break;
       case t('nav-menu.sign-up'):
         navigate('/auth?action=signup');
@@ -72,7 +85,7 @@ const Nav = () => {
           onClick={handleItemClick}
         />
 
-        {!isAuthenticated && (
+        {!userLogged && (
           <>
             <Menu.Item
               name={t('nav-menu.sign-in')}
@@ -88,9 +101,9 @@ const Nav = () => {
             />
           </>
         )}
-        {isAuthenticated && (
+        {userLogged && (
           <>
-            <Menu.Item position="right">{userName}</Menu.Item>
+            <Menu.Item position="right">{userLogged.name}</Menu.Item>
             <Menu.Item
               name={t('nav-menu.logout')}
               onClick={handleItemClick}

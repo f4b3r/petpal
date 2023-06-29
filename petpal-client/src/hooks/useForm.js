@@ -1,12 +1,13 @@
-import { useState } from "react"
+import { useState, useContext } from "react"
 import api from '../api';
 import { ACTION_SIGNUP, ACTION_SIGNIN } from "../resources/Constants";
-
+import AuthContext from "../context/AuthProvider";
 
 const useForm = () => {
   const [form, setForm] = useState({ firstname:"", lastname:"", email:"", password:""})
   const [responseMessage, setResponseMessage] = useState(null);
-  const [isSuccess, setIsSuccess] = useState(true);
+  const [showAuthError, setShowAuthError] = useState(false);
+  const { setAuth } = useContext(AuthContext);
 
   const onChange = (e, { name, value }) => {
     setForm({ ...form, [name]: value })
@@ -16,13 +17,11 @@ const useForm = () => {
     setForm({ firstname:"", lastname:"", email:"", password:"" });
   };
 
-  const signinFormValid =
-  form.email?.length > 0
-  && form.password?.length > 0
 
 
   const handleSubmit = (action) => {
-    setIsSuccess(true);
+    setShowAuthError(false);
+
     if (action === ACTION_SIGNUP && validateForm(ACTION_SIGNUP)) {
      
         api
@@ -30,11 +29,10 @@ const useForm = () => {
           .then((response) => {
             // Handle the response data
             console.log('API response:', response.data);
-            setIsSuccess(true);
           })
           .catch((error) => {
             // Handle any errors
-            setIsSuccess(false);
+            setShowAuthError(true);
             setResponseMessage(error.response.data.message);
             console.error('API error:', error);
           }).finally(()=> resetForm());
@@ -46,11 +44,13 @@ const useForm = () => {
       .then((response) => {
         // Handle the response data
         console.log('API response:', response.data);
-        setIsSuccess(true);
+        const { token, user } = response.data;       
+        setAuth({token, user});
+       
       })
       .catch((error) => {
         // Handle any errors
-        setIsSuccess(false);
+        setShowAuthError(true);
         setResponseMessage(error.response.data.message);
         console.error('API error:', error);
       }).finally(()=> resetForm());
@@ -58,34 +58,7 @@ const useForm = () => {
 
   }
 
- /* function validateSignupForm(action) {
-    const firstnameError = !form.firstname || form.firstname.length === 0;
-    const lastnameError = !form.lastname || form.lastname.length === 0;
-    const emailRequiredError = !form.email || form.email.length === 0;
-    const passwordRequiredError = !form.password || form.password.length === 0;
-    const emailFormatError = validateEmail(form.email);
-    const passwordFormatError = form.password?.length < 8;
-  
-    const isValid =
-      !firstnameError &&
-      !lastnameError &&
-      !emailRequiredError &&
-      !passwordRequiredError &&
-      !emailFormatError &&
-      !passwordFormatError;
-  
-    setForm((prevForm) => ({
-      ...prevForm,
-      firstnameError,
-      lastnameError,
-      emailRequiredError,
-      passwordRequiredError,
-      emailFormatError,
-      passwordFormatError,
-    }));
-  
-    return isValid;
-  }*/
+
   function validateForm(action) {
     let firstnameError = false;
     let lastnameError = false;
@@ -146,6 +119,6 @@ const useForm = () => {
 
 
 
-  return { form, onChange, handleSubmit, responseMessage, isSuccess, resetForm };
+  return { form, onChange, handleSubmit, responseMessage, showAuthError, resetForm };
 }
 export default useForm;
