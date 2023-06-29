@@ -12,6 +12,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Data
 @Builder
@@ -33,11 +34,14 @@ public class User implements UserDetails {
 
     private String password;
 
+    private boolean isEnabled;
+
     @Enumerated(EnumType.STRING)
-    private Role role;
+    private List<Role> roles;
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority(role.name()));
+        return roles.stream().map((role -> new SimpleGrantedAuthority(
+                role.name()))).collect(Collectors.toList());
     }
 
     @Override
@@ -67,6 +71,6 @@ public class User implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return true;
+        return isEnabled;
     }
 }
