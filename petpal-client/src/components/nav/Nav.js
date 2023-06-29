@@ -48,7 +48,6 @@ const Nav = () => {
   return (
     <Segment attached size='mini' className="nav-header">
       <Menu secondary className="body-container">
-
         <Menu.Item className="cursor-default">
           <Image src={logoIcon} className="logo-img" />
         </Menu.Item>
@@ -78,6 +77,7 @@ const Nav = () => {
             <Menu.Item
               name={t('nav-menu.sign-in')}
               onClick={handleItemClick}
+              active={activeItem === t('nav-menu.sign-in')}
               position="right"
             />
             <Menu.Item

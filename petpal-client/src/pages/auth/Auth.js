@@ -1,28 +1,36 @@
 import { useTranslation } from "react-i18next";
 import { Button, Container, Divider, Grid, GridColumn, Icon, Message, Segment } from "semantic-ui-react";
-import './Signup.scss';
-import SignupForm from "../../components/forms/signup";
+import './Auth.scss';
 import { useLocation } from "react-router-dom";
 import SocialSignForm from "../../components/forms/social-sign";
 import { useEffect, useState } from "react";
 import useForm from "../../hooks/useForm";
-import SigninForm from "../../components/forms/signin";
+import AuthForm from "../../components/forms/auth";
 
 
-const Signup = () => {
+const Auth = () => {
     const { t } = useTranslation();
     const [formActive, setFormActive] = useState(false);
     const [actionPage, setActionPage] = useState("");
-    const { form, onChange, formValid, handleSubmit, responseMessage, isSuccess } = useForm();
+    const { form, onChange, handleSubmit, responseMessage, isSuccess, resetForm } = useForm();
     const location = useLocation();
 
-    useEffect(() => {       
+    const handleSignupSubmit = () => {
+        handleSubmit("signup");
+    };
+
+    const handleSigninSubmit = () => {
+        handleSubmit("signin");
+    };
+
+    useEffect(() => {
         const queryParams = new URLSearchParams(location.search);
         const action = queryParams.get("action");
+        resetForm();
         setActionPage(action);
         setFormActive(false);
-      }, [location]);
-     
+    }, [location]);
+
 
     return (
         <Container fluid className="signup-container">
@@ -46,12 +54,13 @@ const Signup = () => {
                                         <>
                                             <Grid.Row>
                                                 <Grid.Column>
-                                                    <SignupForm
+
+                                                    <AuthForm
                                                         form={form}
                                                         onChange={onChange}
-                                                        formValid={formValid}
-                                                        handleSubmit={handleSubmit}
-                                                    />
+                                                        handleSubmit={handleSignupSubmit}
+                                                        isSignup={true}
+                                                    ></AuthForm>
                                                 </Grid.Column>
                                             </Grid.Row>
                                             <Grid.Row>
@@ -82,40 +91,28 @@ const Signup = () => {
                                                     </Button>
                                                 </Grid.Column>
                                             </Grid.Row>
-                                            <Grid.Row>
-                                                <Grid.Column>
-                                                    <Divider />
-                                                </Grid.Column>
-                                            </Grid.Row>
-                                            <Grid.Row>
-                                                <Grid.Column>
-                                                    <p>Already signed up? please sign in</p> <h3 as='a'>sign in</h3>
-                                                </Grid.Column>
-                                            </Grid.Row>
-
                                         </>)
                                 }
-                                 {
+                                {
                                     !formActive && actionPage === "signin" && (
                                         <>
-
                                             <SocialSignForm></SocialSignForm>
                                             <Grid.Row>
                                                 <Grid.Column>
-                                                    <SigninForm  form={form}></SigninForm>
-                                                </Grid.Column>
-                                            </Grid.Row>
-                                            <Grid.Row>
-                                                <Grid.Column>
                                                     <Divider />
                                                 </Grid.Column>
                                             </Grid.Row>
                                             <Grid.Row>
                                                 <Grid.Column>
-                                                    <p>Already signed up? please sign in</p> <h3 as='a'>sign in</h3>
+                                                    <AuthForm
+                                                        form={form}
+                                                        onChange={onChange}
+                                                        handleSubmit={handleSigninSubmit}
+                                                        isSignup={false}
+                                                    ></AuthForm>
+
                                                 </Grid.Column>
                                             </Grid.Row>
-
                                         </>)
                                 }
                             </Grid>
@@ -128,4 +125,4 @@ const Signup = () => {
     );
 }
 
-export default Signup;
+export default Auth;

@@ -6,7 +6,8 @@ import SecuredRoute from './components/misc/SecuredRoute'
 import Landing from './pages/landing'
 import Nav from './components/nav'
 import Dashboard from './pages/dashboard/Dashboard'
-import Signup from './pages/signup/Signup'
+import Auth from './pages/auth'
+
 
 
 
@@ -30,7 +31,7 @@ function App() {
         />
         <Route path="/dashboard" element={<SecuredRoute><Dashboard /></SecuredRoute>} />
         <Route path="/about" element={<About />} />
-        <Route path="/auth" element={<Signup />} />
+        <Route path="/auth" element={<Auth />} />
       </Routes>
 
     </>
