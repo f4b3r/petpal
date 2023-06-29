@@ -6,6 +6,7 @@ import com.petfriends.core.petpal.controller.auth.AuthenticationResponse;
 import com.petfriends.core.petpal.controller.auth.RegisterRequest;
 import com.petfriends.core.petpal.entities.User;
 import com.petfriends.core.petpal.exceptions.EmailRegisteredException;
+import com.petfriends.core.petpal.model.auth.AuthUser;
 import com.petfriends.core.petpal.repositories.UserRepository;
 import com.petfriends.core.petpal.utils.Role;
 import lombok.RequiredArgsConstructor;
@@ -31,18 +32,17 @@ public class AuthenticationService {
                         request.getPassword()
                 )
         );
-
         var user = repository.findByEmail(request.getEmail()).orElseThrow(() -> new UsernameNotFoundException("User not found"));
         var jwtToken = jwtService.generateToken(user);
         return AuthenticationResponse.builder()
-                .token(jwtToken)
+                .token(jwtToken).user(new AuthUser(user.getFirstName(), user.getLastName(),user.getEmail(), user.getRole()))
                 .build();
     }
 
     public AuthenticationResponse register(RegisterRequest request) {
         var userExist = repository.findByEmail(request.getEmail()).isPresent();
 
-        if(userExist){
+        if (userExist) {
             throw new EmailRegisteredException(request.getEmail());
         }
 
