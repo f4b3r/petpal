@@ -6,9 +6,11 @@ import com.petfriends.core.petpal.controller.auth.AuthenticationResponse;
 import com.petfriends.core.petpal.controller.auth.RegisterRequest;
 import com.petfriends.core.petpal.entities.User;
 import com.petfriends.core.petpal.exceptions.EmailRegisteredException;
+import com.petfriends.core.petpal.model.OnRegistrationEvent;
 import com.petfriends.core.petpal.model.auth.AuthUser;
 import com.petfriends.core.petpal.repositories.UserRepository;
 import com.petfriends.core.petpal.utils.Role;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -27,7 +29,7 @@ public class AuthenticationService {
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
-    private final KafkaTemplate<String,String> kafkaTemplate;
+    private final KafkaTemplate<String,OnRegistrationEvent> kafkaTemplate;
     public AuthenticationResponse authenticate(AuthenticationRequest request) {
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
@@ -42,7 +44,7 @@ public class AuthenticationService {
                 .build();
     }
 
-    public AuthenticationResponse register(RegisterRequest request) {
+    public AuthenticationResponse register(RegisterRequest request, HttpServletRequest servletReq) {
         var userExist = repository.findByEmail(request.getEmail()).isPresent();
 
         if (userExist) {
@@ -58,8 +60,12 @@ public class AuthenticationService {
                 .roles(List.of(Role.USER))
                 .build();
         repository.save(user);
-
-        kafkaTemplate.send("ON_REGISTRATION_COMPLETE","ciao");
+        OnRegistrationEvent event = OnRegistrationEvent.builder()
+                .confirmationUrl(servletReq.getContextPath())
+                .email(request.getEmail())
+                .locale(servletReq.getLocale().toString())
+                .build();
+        kafkaTemplate.send("ON_REGISTRATION_COMPLETE",event);
         var jwtToken = jwtService.generateToken(user);
         return AuthenticationResponse.builder()
                 .token(jwtToken)

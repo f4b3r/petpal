@@ -51,7 +51,7 @@ public class AuthenticationServiceTest {
         when(repository.findByEmail(request.getEmail())).thenReturn(Optional.of(new User()));
 
         // Perform the test
-        assertThrows(EmailRegisteredException.class, () -> authenticationService.register(request));
+        assertThrows(EmailRegisteredException.class, () -> authenticationService.register(request, null));
 
         // Verify method invocations and assertions
         verify(repository).findByEmail(request.getEmail());
@@ -75,7 +75,7 @@ public class AuthenticationServiceTest {
         when(jwtService.generateToken(any())).thenReturn("jwtToken");
 
         // Perform the test
-        AuthenticationResponse response = authenticationService.register(request);
+        AuthenticationResponse response = authenticationService.register(request, null);
 
         // Verify method invocations and assertions
         verify(repository).findByEmail(request.getEmail());

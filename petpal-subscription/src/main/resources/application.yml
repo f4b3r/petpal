@@ -1,7 +1,12 @@
 spring:
   kafka:
     bootstrap-servers: ${KAFKA_BROKER}
-
-app:
-  kafka:
-    groupid: SUB_GR_1
+    consumer:
+      group-id: SUB_GR_1
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      properties:
+        # Set up trusted packages for the JsonDeserializer
+        value.deserializer.trusted.packages: '*'
+        # Set up type mappings for the JsonDeserializer
+        spring.json.type.mapping: "on_registration_event:com.petfriends.core.subscription.model.OnRegistrationEventCons"
