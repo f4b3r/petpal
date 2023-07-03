@@ -6,7 +6,6 @@ volumes:
     
 networks:
   backend:
-  frontend:    
   
 services:
 
@@ -19,7 +18,6 @@ services:
     restart: "always"
     networks:
       - backend
-      - frontend
     ports:
       - "8081:8080"
       - "5005:5005"
@@ -34,14 +32,44 @@ services:
       - DB_USER=petpalcore
       - DB_PWD=petpal
       - DB_SSL=false
+      - KAFKA_BROKER=kafka:9092
+      - KAFKA_TOPIC=ON_REGISTRATION_COMPLETE
     depends_on:
      - mysql_core
+     - kafka
     logging:
         driver: local
         options:
             max-size: "20m"
             max-file: "10"
-    
+  # PETPAL Subscription  SERVICE
+  petpal-subscription:
+    image: petpal-subscription:1.0.0
+    build:
+      context: petpal-subscription
+      dockerfile: Dockerfile
+    restart: "no"
+    depends_on:
+      - kafka
+    ports:
+      - "8082:8080"
+      - "5006:5005"
+    environment:
+      - LOG_LEVEL=DEBUG
+      - JAVA_DEBUG=true
+      - JAVA_DEBUG_PORT=*:5005
+      - JAVA_TOOL_OPTIONS=-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005
+      - KAFKA_BROKER=kafka:9092
+      - KAFKA_TOPIC=ON_REGISTRATION_COMPLETE
+    logging:
+      driver: local
+      options:
+        max-size: "20m"
+        max-file: "10"
+    networks:
+      - backend
+
+
     # Database Service (Mysql)
   mysql_core:
     image: mysql
@@ -55,5 +83,37 @@ services:
       MYSQL_ROOT_PASSWORD: root
     volumes:
       - mysql-data:/var/lib/mysql
+    networks:
+      - backend
+
+  # Kafka Service
+  kafka:
+    image: confluentinc/cp-kafka:latest
+    container_name: kafka
+    ports:
+      - "29092:29092"
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_LISTENERS: EXTERNAL_SAME_HOST://:29092,INTERNAL://:9092
+      KAFKA_ADVERTISED_LISTENERS: INTERNAL://kafka:9092,EXTERNAL_SAME_HOST://localhost:29092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INTERNAL:PLAINTEXT,EXTERNAL_SAME_HOST:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: INTERNAL
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_CREATE_TOPICS: "ON_REGISTRATION_COMPLETE:1:1"
+      KAFKA_AUTO_CREATE_TOPICS_ENABLE: "true"
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+    depends_on:
+      - zookeeper
+    networks:
+      - backend
+
+  # Zookeeper Service
+  zookeeper:
+    image: confluentinc/cp-zookeeper:latest
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+    ports:
+      - "22181:2181"
     networks:
       - backend

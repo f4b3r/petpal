@@ -13,7 +13,8 @@ spring:
         format_sql: true
   profiles:
     active: test
-
+  kafka:
+    bootstrap-servers: ${KAFKA_BROKER}
 
 logging:
   level:

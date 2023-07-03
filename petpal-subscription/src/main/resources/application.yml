@@ -1,0 +1,7 @@
+spring:
+  kafka:
+    bootstrap-servers: ${KAFKA_BROKER}
+
+app:
+  kafka:
+    groupid: SUB_GR_1

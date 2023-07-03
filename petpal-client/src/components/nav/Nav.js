@@ -29,7 +29,8 @@ const Nav = () => {
      setUserLogged(auth.user)
     }else{
       console.log('user logged out')
-      setUserLogged(null)
+      setUserLogged(null);
+      localStorage.setItem('auth', null);
     }
   }, [auth]);
 

@@ -10,6 +10,7 @@ import com.petfriends.core.petpal.model.auth.AuthUser;
 import com.petfriends.core.petpal.repositories.UserRepository;
 import com.petfriends.core.petpal.utils.Role;
 import lombok.RequiredArgsConstructor;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -26,7 +27,7 @@ public class AuthenticationService {
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
-
+    private final KafkaTemplate<String,String> kafkaTemplate;
     public AuthenticationResponse authenticate(AuthenticationRequest request) {
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
@@ -52,10 +53,13 @@ public class AuthenticationService {
                 .firstName(request.getFirstname())
                 .lastName(request.getLastname())
                 .email(request.getEmail())
+                .isEnabled(false)
                 .password(passwordEncoder.encode(request.getPassword()))
                 .roles(List.of(Role.USER))
                 .build();
         repository.save(user);
+
+        kafkaTemplate.send("ON_REGISTRATION_COMPLETE","ciao");
         var jwtToken = jwtService.generateToken(user);
         return AuthenticationResponse.builder()
                 .token(jwtToken)
