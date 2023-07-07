@@ -1,38 +1,51 @@
-import React, { useEffect, useState } from "react";
-import { userApi } from "../../services/UserService";
+import React, { useState, useContext, useEffect } from "react";
 import { Dropdown, Image, Menu, Segment } from "semantic-ui-react";
 import './Nav.scss';
 import logoIcon from '../../resources/images/logo-color.svg'
 import i18n from 'i18next';
-import useKeycloakAuth from "../../hooks/useKeycloakAuth";
 import { useTranslation } from "react-i18next";
-import { Link } from "react-router-dom";
-import { useKeycloak } from "@react-keycloak/web";
+import { Link, useNavigate } from "react-router-dom";
+import AuthContext from "../../context/AuthProvider";
 
 
 
 const Nav = () => {
-
-  const { isAuthenticated, userName } = useKeycloakAuth();
+  const navigate = useNavigate();
+  const [userLogged, setUserLogged ] = useState({});
   const [activeItem, setactiveItem] = useState("home");
   const { t } = useTranslation();
-  const [selectedLanguage, setSelectedLanguage] = useState('');
-  const { keycloak, initialized } = useKeycloak();
+  const [selectedLanguage, setSelectedLanguage] = useState('it');
+  const { auth,  setAuth } = useContext(AuthContext);
 
+  const handleLogout = () => {
+    
+    setAuth(null); // Clear the authentication state
+    navigate('/'); // Redirect to the home page or any other desired route
+  };
 
+  useEffect(() => {   
+    if (auth) {
+      console.log('user logged in', JSON.stringify(auth));
+     setUserLogged(auth.user)
+    }else{
+      console.log('user logged out')
+      setUserLogged(null);
+      localStorage.setItem('auth', null);
+    }
+  }, [auth]);
 
   const handleItemClick =  (e, { name }) => {
     setactiveItem(name);
 
     switch (name) {
       case t('nav-menu.sign-in'):
-        keycloak.login();
+        navigate('/auth?action=signin');
         break;
       case t('nav-menu.logout'):
-        keycloak.logout();
+        handleLogout()
         break;
       case t('nav-menu.sign-up'):
-        keycloak.login({ action: 'register' });
+        navigate('/auth?action=signup');
         break;
      
       default:
@@ -46,19 +59,9 @@ const Nav = () => {
     setSelectedLanguage(value);
   }
 
-  const asyncgetUsers = () => {
-   
-    userApi.getPosts().then((movies) => console.log(movies)).catch(err => console.log(err))
-  };
-
-  useEffect(() => {
-    setSelectedLanguage(i18n.language);
-  }, []);
-
   return (
     <Segment attached size='mini' className="nav-header">
       <Menu secondary className="body-container">
-
         <Menu.Item className="cursor-default">
           <Image src={logoIcon} className="logo-img" />
         </Menu.Item>
@@ -75,7 +78,7 @@ const Nav = () => {
           to='/about'
           name={t('nav-menu.messages')}
           active={activeItem === t('nav-menu.messages')}
-          onClick={asyncgetUsers}
+          onClick={handleItemClick}
         />
         <Menu.Item
           name={t('nav-menu.friends')}
@@ -83,11 +86,12 @@ const Nav = () => {
           onClick={handleItemClick}
         />
 
-        {!isAuthenticated && (
+        {!userLogged && (
           <>
             <Menu.Item
               name={t('nav-menu.sign-in')}
               onClick={handleItemClick}
+              active={activeItem === t('nav-menu.sign-in')}
               position="right"
             />
             <Menu.Item
@@ -98,9 +102,9 @@ const Nav = () => {
             />
           </>
         )}
-        {isAuthenticated && (
+        {userLogged && (
           <>
-            <Menu.Item position="right">{userName}</Menu.Item>
+            <Menu.Item position="right">{userLogged.name}</Menu.Item>
             <Menu.Item
               name={t('nav-menu.logout')}
               onClick={handleItemClick}

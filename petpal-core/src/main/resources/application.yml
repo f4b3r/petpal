@@ -11,6 +11,16 @@ spring:
     properties:
       hibernate:
         format_sql: true
+  profiles:
+    active: test
+  kafka:
+    bootstrap-servers: ${KAFKA_BROKER}
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+      properties:
+        spring.json.type.mapping: "on_registration_event:com.petfriends.core.petpal.model.OnRegistrationEvent"
+
 
 logging:
   level:
@@ -22,5 +32,5 @@ logging:
 app:
   jwt:
     secret: 8sHhXfyDiMb32SX0D+JYEdXihJUwQZkGHhFzRTGbwtxsw0tb5fWVN3uuhR4zslj7
-
-
+  cors:
+    allowed-origins: http://localhost:3000

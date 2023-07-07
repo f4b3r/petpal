@@ -6,6 +6,7 @@ import reportWebVitals from './reportWebVitals';
 import 'semantic-ui-css/semantic.min.css'
 import './i18n';
 import { BrowserRouter } from 'react-router-dom';
+import { AuthProvider } from './context/AuthProvider';
 
 
 
@@ -13,7 +14,9 @@ import { BrowserRouter } from 'react-router-dom';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
     <BrowserRouter>
-        <App />
+        <AuthProvider>
+            <App />
+        </AuthProvider>
     </BrowserRouter>
 );
 
