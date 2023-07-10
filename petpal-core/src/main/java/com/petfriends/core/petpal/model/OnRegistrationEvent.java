@@ -11,4 +11,5 @@ public class OnRegistrationEvent {
     private String email;
     private String locale;
     private String confirmationUrl;
+    private String user_id;
 }

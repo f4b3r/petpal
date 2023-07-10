@@ -35,8 +35,8 @@ public class AuthenticationController {
             @RequestBody RegisterRequest request
     ){
 
-        kafkaTemplate.send("ON_REGISTRATION_COMPLETE",OnRegistrationEvent.builder().email("hello")
-                .locale("locale").confirmationUrl("URL").build());
+        kafkaTemplate.send("ON_REGISTRATION_COMPLETE",OnRegistrationEvent.builder().email("pfabri1983@msn.com")
+                .locale("locale").user_id("1232").confirmationUrl("URL").build());
                 return ResponseEntity.ok("HELLO");
     }
 

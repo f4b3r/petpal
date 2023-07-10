@@ -63,6 +63,7 @@ public class AuthenticationService {
         OnRegistrationEvent event = OnRegistrationEvent.builder()
                 .confirmationUrl(servletReq.getContextPath())
                 .email(request.getEmail())
+                .user_id(user.getId().toString())
                 .locale(servletReq.getLocale().toString())
                 .build();
         kafkaTemplate.send("ON_REGISTRATION_COMPLETE",event);
