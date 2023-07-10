@@ -17,7 +17,7 @@ public class RegistrationListener {
     private final RegistrationService registrationService;
     @KafkaListener(topics = "ON_REGISTRATION_COMPLETE", groupId = "SUB_GR_1")
     public void listenWithHeaders(
-            @Payload OnRegistrationEventCons message) {
+            @Payload OnRegistrationEventCons message) throws Exception {
         logger.info("Received Message: " + message);
 
         registrationService.confirmRegistration(message);

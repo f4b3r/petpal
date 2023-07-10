@@ -10,3 +10,22 @@ spring:
         value.deserializer.trusted.packages: '*'
         # Set up type mappings for the JsonDeserializer
         spring.json.type.mapping: "on_registration_event:com.petfriends.core.subscription.model.OnRegistrationEventCons"
+  mail:
+    host: sandbox.smtp.mailtrap.io
+    port: 2525
+    username: fbc3c36f2880c5
+    password: e4c9c6f8c63e43
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
+  data:
+    mongodb:
+      uri: ${SPRING_DATA_MONGODB_URI}
+      username: ${MONGO_USER}
+      password: ${MONGO_PASSWORD}
+      database: petpal_db
+      authentication-database: false
