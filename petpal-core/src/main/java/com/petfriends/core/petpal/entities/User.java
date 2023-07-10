@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.UuidGenerator;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -23,7 +24,7 @@ import java.util.stream.Collectors;
 public class User implements UserDetails {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @UuidGenerator
     private String id;
 
     private String firstName;
@@ -36,6 +37,8 @@ public class User implements UserDetails {
 
     private boolean isEnabled;
 
+    @ElementCollection(targetClass = Role.class)
+    @CollectionTable
     @Enumerated(EnumType.STRING)
     private List<Role> roles;
     @Override
